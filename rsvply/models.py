@@ -14,15 +14,15 @@ class User(db.Model, UserMixin):
     events = db.relationship('Event', backref='author', lazy=True)
 
     def __repr__(self):
-        return f"User('{self.username}', '{self.email}')"
+        return f"User('{self.id}, {self.username}', '{self.email}')"
     
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    date_time = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    location = db.Column(db.String(100), nullable=False)
-    attendees = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(20), nullable=False)
+    date = db.Column(db.Date, nullable=False)
+    description =  db.Column(db.Text, nullable=False)
+    location = db.Column(db.String(20), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
-        return f"Event('{self.name}', '{self.date_time}')"
+        return f"Event('{self.title}', '{self.date}')"

@@ -2,8 +2,10 @@ from rsvply import app, bcrypt, db
 from flask import url_for, render_template, redirect, flash, request
 from flask_login import login_user, current_user, logout_user, login_required
 
-from rsvply.models import User
-from rsvply.forms import LoginForm, RegistrationForm
+from rsvply.models import User, Event
+from rsvply.forms import LoginForm, RegistrationForm, EventForm, ist_timezone
+
+from datetime import datetime
 
 
 @app.route("/")
@@ -15,8 +17,8 @@ def index():
 # Login and Register----------------------------
 @app.route("/register", methods=['GET', 'POST'])
 def register():
-    if current_user.is_authenticated:
-        return redirect(url_for('home'))
+    # if current_user.is_authenticated:
+    #     return redirect(url_for('home'))
     
     form = RegistrationForm()
     if form.validate_on_submit():
@@ -41,8 +43,7 @@ def login():
         user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
-            next_page = request.args.get('next')
-            return redirect(next_page) if next_page else redirect(url_for('home'))
+            redirect(url_for('home'))
         else:
             flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('login.html', title='Login', form=form)
@@ -55,9 +56,34 @@ def login():
 @app.route("/home")
 @login_required
 def home():
-    return render_template("home.html")
+    events = Event.query.filter_by(user_id=current_user.id)
+    print(current_user.id)
+    return render_template("home.html", events=events)
 
 @app.route("/logout")
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+
+# Event ------------------------------------
+@app.route("/create-event", methods=['GET', 'POST'])
+@login_required
+def create_event():
+    form = EventForm()
+    
+
+    if form.validate_on_submit():
+        event = Event(title=form.title.data, date=form.date.data,
+                       description = form.description.data, location=form.location.data, user_id = current_user.id,
+                       author=current_user)
+        db.session.add(event)
+        db.session.commit()
+
+
+        flash('Submitted', 'success')
+        return redirect(url_for('home'))
+
+
+    min_date=datetime.now(ist_timezone).strftime("%Y-%m-%d")
+    return render_template("event/event.html", form=form, min_date=min_date)
