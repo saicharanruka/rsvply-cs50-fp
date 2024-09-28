@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "layout-divided.html" %}
 {% block content %}
 
 <div class=" container d-flex align-items-center py-4 bg-body-tertiary mt-5">
@@ -6,9 +6,10 @@
         <form method="POST" action="">
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Join Today</legend>
+                <legend class="border-bottom fw-bold mb-4">RSVP | {{event.title}}</legend>
                 <div class="form-group">
-                    {{ form.username.label(class="form-control-label") }}
+                    {{ form.username.label(class="form-control-label")}}
+
 
                     {% if form.username.errors %}
                         {{ form.username(class="form-control form-control-lg is-invalid") }}
@@ -34,32 +35,12 @@
                         {{ form.email(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
-                <div class="form-group">
-                    {{ form.password.label(class="form-control-label") }}
-                    {% if form.password.errors %}
-                        {{ form.password(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.password.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        {{ form.password(class="form-control form-control-lg") }}
-                    {% endif %}
+                <div class="form-check mt-3">
+                    {{ form.attending.label(class="form-check-label") }}
+                    {{ form.attending(class="form-check-input") }}
+
                 </div>
-                <div class="form-group">
-                    {{ form.confirm_password.label(class="form-control-label") }}
-                    {% if form.confirm_password.errors %}
-                        {{ form.confirm_password(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.confirm_password.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        {{ form.confirm_password(class="form-control form-control-lg") }}
-                    {% endif %}
-                </div>
+
             </fieldset>
             <div class="form-group mt-3">
                 {{ form.submit(class="btn btn-outline-dark") }}
@@ -68,3 +49,14 @@
     </div>
 </div>
 {% endblock content %}
+
+
+{%block sidebar%}
+<div class="content-section mt-5">
+    <h3>QR Code</h3>
+    {% if qr_code_data%}
+        <img src="data:image/png;base64,{{ qr_code_data }}" alt="QR Code">
+    {%endif%}
+</div>
+
+{%endblock%}

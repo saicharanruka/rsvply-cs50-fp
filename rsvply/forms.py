@@ -2,15 +2,14 @@ from collections.abc import Sequence
 from typing import Any
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField,\
-      IntegerField, TimeField, DateField, TextAreaField
+      IntegerField, TimeField, DateField, TextAreaField, DateTimeField
 from wtforms.validators import DataRequired, Length, EqualTo, Email, ValidationError, NumberRange
 import email_validator
 from rsvply.models import User
 
 
 from datetime import datetime
-import pytz
-ist_timezone = pytz.timezone('Asia/Kolkata')
+from rsvply import IST
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username',validators=[DataRequired(), Length(min=2, max=20)])
@@ -39,22 +38,35 @@ class LoginForm(FlaskForm):
 
 class EventForm(FlaskForm):
     title = StringField('Title',validators=[DataRequired(), Length(min=10, max=20)])
-    date = DateField('Date', format="%Y-%m-%d", validators=[DataRequired()])
     description = TextAreaField('Description', validators=[DataRequired(), Length(min=20)])
 
-    start_time = TimeField('Start', validators=[DataRequired()])
-    end_time = TimeField('End', validators=[DataRequired()])
-
-
+    date = DateTimeField('Date',format='%Y-%m-%dT%H:%M', validators=[DataRequired()])
+    expiry = DateTimeField('Expiry',format='%Y-%m-%dT%H:%M', validators=[DataRequired()])
 
     location = StringField('Location',validators=[DataRequired(), Length(min=10,max=100)])
-    submit = SubmitField('Generate Form')
-    # expire link by
+    submit = SubmitField('Generate')
 
     def validate_date(self, date):
-        today_date = datetime.now(ist_timezone).date()
-        if date.data < today_date:
-            raise ValidationError('Cannot choose dates from the past')
+        today_date = datetime.now(IST)
+        input_date = date.data.astimezone(IST)
+        if input_date < today_date:
+            raise ValidationError('Cannot choose date and time from the past')
+        
     
+    def validate_expiry(self, field):
+        date = self.date.data.astimezone(IST)
+        expiry = field.data.astimezone(IST)
+        today = datetime.now(IST)
+
+        if expiry < today:
+            raise ValidationError("Expiry date and time must be after today.")
+        if expiry > date:
+            raise ValidationError("Expiry date and time must be before the event.")
 
 
+class RSVPForm(FlaskForm):
+    username = StringField('Username',validators=[DataRequired(), Length(min=2, max=20)])
+    email = StringField('Email',validators=[DataRequired(), Email()])
+
+    attending = BooleanField('RSVP ?')
+    submit = SubmitField('Submit')

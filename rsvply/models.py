@@ -18,11 +18,27 @@ class User(db.Model, UserMixin):
     
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(20), nullable=False)
-    date = db.Column(db.Date, nullable=False)
-    description =  db.Column(db.Text, nullable=False)
-    location = db.Column(db.String(20), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    title = db.Column(db.String(30), nullable=False)
+    datetime = db.Column(db.DateTime(timezone=True), nullable=False)
+    expiry = db.Column(db.DateTime(timezone=True), nullable=False)
+    description =  db.Column(db.Text, nullable=False)
+    location = db.Column(db.String(30), nullable=False)
+    hash = db.Column(db.String(64), unique=True, nullable=False)
+
+class RSVP(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), nullable=False)
+    attending = db.Column(db.Boolean(), nullable=False, default=False)
+    checked_in = db.Column(db.Boolean(), nullable=False, default=False)
+
+
+    event_id = db.Column(db.Integer, nullable=False)
+    hash = db.Column(db.String(64), unique=True, nullable=False) # will be updated when hit submit
+
+
 
     def __repr__(self):
-        return f"Event('{self.title}', '{self.date}')"
+        return f"Event('{self.name}', '{self.email}', '{self.event_id}')"
+    

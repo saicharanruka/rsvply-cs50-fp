@@ -1,9 +1,9 @@
 {% extends "layout.html" %}
 {% block content %}
     <section>
-        <div class="container col-xxl-8 px-4 py-5">
+        <div class="container col-xxl-8 py-5">
             <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
-            <div class="col-10 col-sm-8 col-lg-6">
+            <div class="col-12 col-sm-8 col-lg-6">
                 <img src="{{url_for('static',filename='images/home.jpg')}}" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
             </div>
             <div class="col-lg-6">
@@ -12,6 +12,7 @@
 
                 </p>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                <a class="btn btn-dark btn-lg px-4" href="{{url_for('register')}}" target="_blank">Register</a>
                 <a class="btn btn-outline-secondary btn-lg px-4" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">Contact us</a>
                 </div>
             </div>
@@ -19,41 +20,61 @@
         </div>
     </section>
 
-    <!-- IMAGE INSERT HERE -->
 
     <section>
         <div class="container px-4 py-5 mt-3" id="hanging-icons">
           <h2 class="pb-2 fw-bold border-bottom">Features</h2>
             <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
               <div class="col d-flex align-items-start">
-                <div class="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
-                  <svg class="bi" width="1em" height="1em"><use xlink:href="#toggles2"></use></svg>
+                <div class="icon-square text-body-emphasis  d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" fill="currentColor" class="bi bi-journal-check" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M10.854 6.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 8.793l2.646-2.647a.5.5 0 0 1 .708 0"/>
+                    <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2"/>
+                    <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z"/>
+                  </svg>
                 </div>
                 <div>
-                  <h3 class="fs-2 text-body-emphasis">Featured title</h3>
-                  <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+                  <h3 class="fs-2 text-body-emphasis">Easy Event Creation</h3>
+                  <p>Organize your events effortlessly! Our platform allows you to create and manage events in just a few clicks. Add event details like the name, date, time, location, and description—all in one place.</p>
                 </div>
               </div>
               <div class="col d-flex align-items-start">
-                <div class="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
-                  <svg class="bi" width="1em" height="1em"><use xlink:href="#cpu-fill"></use></svg>
+                <div class="icon-square text-body-emphasis  d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" fill="currentColor" class="bi bi-qr-code-scan" viewBox="0 0 16 16">
+                    <path d="M0 .5A.5.5 0 0 1 .5 0h3a.5.5 0 0 1 0 1H1v2.5a.5.5 0 0 1-1 0zm12 0a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0V1h-2.5a.5.5 0 0 1-.5-.5M.5 12a.5.5 0 0 1 .5.5V15h2.5a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5v-3a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1 0-1H15v-2.5a.5.5 0 0 1 .5-.5M4 4h1v1H4z"/>
+                    <path d="M7 2H2v5h5zM3 3h3v3H3zm2 8H4v1h1z"/>
+                    <path d="M7 9H2v5h5zm-4 1h3v3H3zm8-6h1v1h-1z"/>
+                    <path d="M9 2h5v5H9zm1 1v3h3V3zM8 8v2h1v1H8v1h2v-2h1v2h1v-1h2v-1h-3V8zm2 2H9V9h1zm4 2h-1v1h-2v1h3zm-4 2v-1H8v1z"/>
+                    <path d="M12 9h2V8h-2z"/>
+                  </svg>
                 </div>
                 <div>
-                  <h3 class="fs-2 text-body-emphasis">Featured title</h3>
-                  <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+                  <h3 class="fs-2 text-body-emphasis"> Unique QR Codes for Attendees</h3>
+                  <p>Every attendee receives a unique QR code once they RSVP. This code serves as their entry ticket to the event, making it easy to identify and track attendees.</p>
                 </div>
               </div>
               <div class="col d-flex align-items-start">
-                <div class="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
-                  <svg class="bi" width="1em" height="1em"><use xlink:href="#tools"></use></svg>
+                <div class="icon-square text-body-emphasis  d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" fill="currentColor" class="bi bi-person-wheelchair" viewBox="0 0 16 16">
+                    <path d="M12 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3m-.663 2.146a1.5 1.5 0 0 0-.47-2.115l-2.5-1.508a1.5 1.5 0 0 0-1.676.086l-2.329 1.75a.866.866 0 0 0 1.051 1.375L7.361 3.37l.922.71-2.038 2.445A4.73 4.73 0 0 0 2.628 7.67l1.064 1.065a3.25 3.25 0 0 1 4.574 4.574l1.064 1.063a4.73 4.73 0 0 0 1.09-3.998l1.043-.292-.187 2.991a.872.872 0 1 0 1.741.098l.206-4.121A1 1 0 0 0 12.224 8h-2.79zM3.023 9.48a3.25 3.25 0 0 0 4.496 4.496l1.077 1.077a4.75 4.75 0 0 1-6.65-6.65z"/>
+                  </svg>
                 </div>
                 <div>
-                  <h3 class="fs-2 text-body-emphasis">Featured title</h3>
-                  <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+                  <h3 class="fs-2 text-body-emphasis"> Fast and Contactless Check-in</h3>
+                  <p>On the event day, use our integrated QR code scanning system to quickly check in attendees. Simply scan their QR code using any smartphone or scanner to verify their RSVP and mark them as checked in. No more manual entry lists—just fast, contactless entry!</p>
               </div>
             </div>
           </div>
     </section>
+
+    <div class="overflow-hidden" style="max-height: 30vh;">
+      <div class="container px-5">
+        <img src="{{url_for('static',filename='images/rsvp.jpg')}}" class="img-fluid border rounded-3 shadow-lg mb-4 d-block w-100" alt="Example image" width="700" height="500" loading="lazy">
+      </div>
+    </div>
+
+    <!-- IMAGE INSERT HERE -->
+
 
 
 
@@ -62,7 +83,7 @@
           <header>        
             <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
               <h1 class="display-4 fw-normal text-body-emphasis">Pricing</h1>
-              <p class="fs-5 text-body-secondary">Quickly build an effective pricing table for your potential customers with this Bootstrap example. It’s built with default Bootstrap components and utilities with little customization.</p>
+              <p class="fs-5 text-body-secondary">Pricing built for events of all shapes and sizes.</p>
             </div>
           </header>
             <main>
@@ -70,118 +91,63 @@
                 <div class="col">
                   <div class="card mb-4 rounded-3 shadow-sm">
                     <div class="card-header py-3">
-                      <h4 class="my-0 fw-normal">Free</h4>
+                      <h4 class="my-0 fw-normal">Personal Events</h4>
                     </div>
                     <div class="card-body">
                       <h1 class="card-title pricing-card-title">$0<small class="text-body-secondary fw-light">/mo</small></h1>
+                      <p>Best for:</p>
                       <ul class="list-unstyled mt-3 mb-4">
-                        <li>10 users included</li>
-                        <li>2 GB of storage</li>
-                        <li>Email support</li>
-                        <li>Help center access</li>
+                        <li>Weddings</li>
+                        <li>Graduations</li>
+                        <li>Birthdays</li>
+                        <li>Celebrations of Life</li>
                       </ul>
-                      <button type="button" class="w-100 btn btn-lg btn-outline-primary">Sign up for free</button>
+                      <a href="{{url_for('login')}}"class="w-100 btn btn-lg btn-outline-dark">Sign up for free</a>
                     </div>
                   </div>
                 </div>
                 <div class="col">
                   <div class="card mb-4 rounded-3 shadow-sm">
                     <div class="card-header py-3">
-                      <h4 class="my-0 fw-normal">Pro</h4>
+                      <h4 class="my-0 fw-normal">Professional Events</h4>
                     </div>
                     <div class="card-body">
                       <h1 class="card-title pricing-card-title">$15<small class="text-body-secondary fw-light">/mo</small></h1>
+                      <p>Best for:</p>
                       <ul class="list-unstyled mt-3 mb-4">
-                        <li>20 users included</li>
-                        <li>10 GB of storage</li>
-                        <li>Priority email support</li>
-                        <li>Help center access</li>
+                        <li>Launch Events</li>
+                        <li>Reunions</li>
+                        <li>Meetings & Small Summits</li>
+                        <li>Galas & Fundraisers</li>
                       </ul>
-                      <button type="button" class="w-100 btn btn-lg btn-primary">Get started</button>
+                      <a class="w-100 btn btn-lg btn-dark" href="#">Get started</a>
                     </div>
                   </div>
                 </div>
                 <div class="col">
-                  <div class="card mb-4 rounded-3 shadow-sm border-primary">
-                    <div class="card-header py-3 text-bg-primary border-primary">
+                  <div class="card mb-4 rounded-3 shadow-sm border-dark">
+                    <div class="card-header py-3 text-bg-dark border-dark">
                       <h4 class="my-0 fw-normal">Enterprise</h4>
                     </div>
                     <div class="card-body">
-                      <h1 class="card-title pricing-card-title">$29<small class="text-body-secondary fw-light">/mo</small></h1>
+                      <h1 class="card-title pricing-card-title">Custom</h1>
                       <ul class="list-unstyled mt-3 mb-4">
-                        <li>30 users included</li>
-                        <li>15 GB of storage</li>
-                        <li>Phone and email support</li>
-                        <li>Help center access</li>
+                      <p>Best for:</p>
+                        <li>Conferences</li>
+                        <li>Large Scale AffairsLarge Scale Affairs</li>
+                        <li>Large Scale Affairs</li>
                       </ul>
-                      <button type="button" class="w-100 btn btn-lg btn-primary">Contact us</button>
+                      <a class="w-100 btn btn-lg btn-dark" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">Chat now</a>
                     </div>
                   </div>
                 </div>
-              </div>
-          
-              <h2 class="display-6 text-center mb-4">Compare plans</h2>
-          
-              <div class="table-responsive">
-                <table class="table text-center">
-                  <thead>
-                    <tr>
-                      <th style="width: 34%;"></th>
-                      <th style="width: 22%;">Free</th>
-                      <th style="width: 22%;">Pro</th>
-                      <th style="width: 22%;">Enterprise</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row" class="text-start">Public</th>
-                      <td><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/></svg></td>
-                      <td><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/></svg></td>
-                      <td><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/></svg></td>
-                    </tr>
-                    <tr>
-                      <th scope="row" class="text-start">Private</th>
-                      <td></td>
-                      <td><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/></svg></td>
-                      <td><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/></svg></td>
-                    </tr>
-                  </tbody>
-          
-                  <tbody>
-                    <tr>
-                      <th scope="row" class="text-start">Permissions</th>
-                      <td><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/></svg></td>
-                      <td><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/></svg></td>
-                      <td><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/></svg></td>
-                    </tr>
-                    <tr>
-                      <th scope="row" class="text-start">Sharing</th>
-                      <td></td>
-                      <td><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/></svg></td>
-                      <td><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/></svg></td>
-                    </tr>
-                    <tr>
-                      <th scope="row" class="text-start">Unlimited members</th>
-                      <td></td>
-                      <td><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/></svg></td>
-                      <td><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/></svg></td>
-                    </tr>
-                    <tr>
-                      <th scope="row" class="text-start">Extra security</th>
-                      <td></td>
-                      <td></td>
-                      <td><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/></svg></td>
-                    </tr>
-                  </tbody>
-                </table>
               </div>
             </main>
           
             <footer class="pt-4 my-md-5 pt-md-5 border-top">
               <div class="row">
                 <div class="col-12 col-md">
-                  <img class="mb-2" src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="24" height="19">
-                  <small class="d-block mb-3 text-body-secondary">© 2017–2024</small>
+                  <small class="d-block mb-3 text-body-secondary">© RSVP.ly 2024</small>
                 </div>
                 <div class="col-6 col-md">
                   <h5>Features</h5>

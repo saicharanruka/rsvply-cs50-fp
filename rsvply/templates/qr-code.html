@@ -1,0 +1,52 @@
+{% extends "layout-divided.html" %}
+
+
+{% block content %}
+    <h1>Scan QR Code</h1>
+{% endblock content %}
+
+
+
+{% block sidebar %}
+<div class="container mt-5">
+    <h3> Scan RSVP</h3>
+    <div id="qr-reader" style="width: 400px;"></div>
+    <div id="qr-reader-results"></div>
+</div>
+
+
+    <script>
+        function onScanSuccess(decodedText, decodedResult) {
+            // Handle the decoded result here
+            document.getElementById("qr-reader-results").innerText = `QR Code scanned: ${decodedText}`;
+
+            // Send scanned data to Flask backend
+            fetch('/process_qr', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ scanned_data: decodedText }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(`Server response: ${data.message}`);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+            html5QrcodeScanner.clear();
+        }
+
+        function onScanError(errorMessage) {
+            // Handle any errors here
+            console.error(errorMessage);
+        }
+
+        // Set up the QR code reader
+        let html5QrCode = new Html5Qrcode("qr-reader");
+
+        // Start scanning the QR code with camera
+        html5QrCode.start({ facingMode: "environment" }, { fps: 10, qrbox: 250 }, onScanSuccess, onScanError);
+    </script>
+{% endblock sidebar %}

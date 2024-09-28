@@ -1,0 +1,88 @@
+{% extends "layout-divided.html" %}
+
+
+{% block content %}
+<div class="container mt-5">
+    <article class="media content-section">
+        <div class="media-body">
+          <div class="article-metadata">
+            <small class="text-muted">Date : {{ event.datetime.strftime('%Y-%m-%d') }}</small>
+            <small class="text-muted">Expiry : {{ event.expiry.strftime('%Y-%m-%d') }}</small>
+            <small class="text-muted">Location : {{ event.location}}</small>
+          </div>
+          <h2 class="article-title">{{ event.title }}</h2>
+          <p class="article-content">{{ event.description }}</p>
+        </div>
+      </article>
+</div>
+
+
+{% endblock content %}
+
+
+{% block sidebar%}
+<div class="content-section mt-5">
+    <h3> Scan RSVP</h3>
+    <div id="qr-reader" style="width: 400px;"></div>
+    <div id="qr-reader-results"></div>
+    <div class="article-metadata">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Attending</th>
+                    <th scope="col">Checked In</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for rsvp in rsvps%}
+                    <tr>
+                        <td>{{ rsvp.name }}</td>
+                        <td>{{ rsvp.attending }}</td>
+                        <td>{{ rsvp.checked_in }}</td>
+                    </tr>
+                {%endfor%}
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+    <script>
+        function onScanSuccess(decodedText, decodedResult) {
+            // Handle the decoded result here
+           // document.getElementById("qr-reader-results").innerText = `QR Code scanned: ${decodedText}`;
+            window.location.reload();
+
+            // Send scanned data to Flask backend
+            fetch('/process_qr', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ scanned_data: decodedText }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(`Server response: ${data.message}`);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+
+        function onScanError(errorMessage) {
+            // Handle any errors here
+            console.error(errorMessage);
+            // window.location.reload();
+        }
+
+        // Set up the QR code reader
+        let html5QrCode = new Html5Qrcode("qr-reader");
+
+        // Start scanning the QR code with camera
+        html5QrCode.start({ facingMode: "environment" }, { fps: 10, qrbox: 250 }, onScanSuccess, onScanError);
+    </script>
+{% endblock %}

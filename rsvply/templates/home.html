@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<a class="btn btn-info" href="{{url_for('create_event')}}">Create event</a>
+<a class="btn btn-info m-5" href="{{url_for('create_event')}}">Create event</a>
 
   {% for event in events %}
     <div class="border rounded p-4">
@@ -12,7 +12,9 @@
           <div class="d-flex flex-column w-100 justify-content-between m-0 p-0">
               <div class="d-flex justify-content-between">
                   <span class="text-muted">{{ event.date }}</span>
-                  <a class="btn btn-warning">Start Login</a>
+                  <span class="text-muted">{{ event.start_time }}</span>
+                  <span class="text-muted">{{ event.end_time }}</span>
+                  <!-- <a class="btn btn-warning">Start Login</a> -->
               </div>
           </div>
       </div>
@@ -22,7 +24,7 @@
 
       <!-- Blog Content -->
       <div class="blog-content">
-          <h2><a class="mb-3" href="#">{{ event.title }}</a></h2>
+          <h2><a class="mb-3" href="{{ url_for('event', event_hash=event.hash) }}">{{ event.title }}</a></h2>
           <p class="article-content">{{ event.description }}</p>
       </div>
     </div>
