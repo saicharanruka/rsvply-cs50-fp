@@ -5,13 +5,16 @@
 <div class="container mt-5">
     <article class="media content-section">
         <div class="media-body">
-          <div class="article-metadata">
-            <small class="text-muted">Date : {{ event.datetime.strftime('%Y-%m-%d') }}</small>
-            <small class="text-muted">Expiry : {{ event.expiry.strftime('%Y-%m-%d') }}</small>
-            <small class="text-muted">Location : {{ event.location}}</small>
+          <div class="article-metadata mr-3">
+            <small class=" fw-bold text-muted">Date : {{ event.datetime.strftime('%Y-%m-%d %H:%M') }}</small>
+            <small class="text-muted">Expiry : {{ event.expiry.strftime('%Y-%m-%d %H:%M') }}</small>
           </div>
           <h2 class="article-title">{{ event.title }}</h2>
           <p class="article-content">{{ event.description }}</p>
+          <br>
+          <p class="fw-bold"> Location : {{ event.location}}</p>
+          <p class="fw-bold">RSVP Link : <a href="{{url_for('rsvp', event_hash=event.hash)}}" target="_blank">{{url_for('rsvp', event_hash=event.hash)}}</a> </p>
+          
         </div>
       </article>
 </div>
@@ -21,40 +24,52 @@
 
 
 {% block sidebar%}
-<div class="content-section mt-5">
-    <h3> Scan RSVP</h3>
-    <div id="qr-reader" style="width: 400px;"></div>
-    <div id="qr-reader-results"></div>
-    <div class="article-metadata">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Attending</th>
-                    <th scope="col">Checked In</th>
-                </tr>
-            </thead>
-            <tbody>
-                {%for rsvp in rsvps%}
+{% if can_login%}
+    <div class="content-section mt-5">
+        <h3> Scan RSVP</h3>
+        <div id="qr-reader" style="width: 400px;"></div>
+        <div id="qr-reader-results"></div>
+    {%else%}
+        <div class="content-section mt-5">
+            <h3> Scan RSVP</h3>
+        </div>
+        
+        {%endif%}
+        
+        <div class="article-metadata">
+            <table class="table">
+                <thead>
                     <tr>
-                        <td>{{ rsvp.name }}</td>
-                        <td>{{ rsvp.attending }}</td>
-                        <td>{{ rsvp.checked_in }}</td>
+                        <th scope="col">Name</th>
+                        <th scope="col">Attending</th>
+                        <th scope="col">Checked In</th>
                     </tr>
-                {%endfor%}
+                </thead>
+                <tbody>
+                    {%for rsvp in rsvps%}
+                        <tr>
+                            <td>{{ rsvp.name }}</td>
+                            <td>{{ rsvp.attending }}</td>
+                            <td>{{ rsvp.checked_in }}</td>
+                        </tr>
+                    {%endfor%}
 
-            </tbody>
-        </table>
+                </tbody>
+            </table>
 
+        </div>
     </div>
-</div>
 
 
     <script>
         function onScanSuccess(decodedText, decodedResult) {
             // Handle the decoded result here
            // document.getElementById("qr-reader-results").innerText = `QR Code scanned: ${decodedText}`;
-            window.location.reload();
+
+           
+           
+
+            
 
             // Send scanned data to Flask backend
             fetch('/process_qr', {
@@ -71,6 +86,11 @@
             .catch((error) => {
                 console.error('Error:', error);
             });
+
+            scannerEnabled = false;
+            setTimeout(function() {
+            window.location.reload();
+        }, 5000); // Delay of 5000 milliseconds (5 seconds)
         }
 
         function onScanError(errorMessage) {

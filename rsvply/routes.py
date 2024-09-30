@@ -5,7 +5,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 from rsvply.models import User, Event, RSVP
 from rsvply.forms import LoginForm, RegistrationForm, EventForm,RSVPForm
 
-from datetime import datetime
+from datetime import datetime, timedelta
 import hashlib, uuid, pytz, base64
 import qrcode as qr
 from io import BytesIO
@@ -30,7 +30,10 @@ def check_for_duplicates(email,event_id):
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    
+    return render_template("landing-page.html")
 
 
 
@@ -47,7 +50,7 @@ def register():
         db.session.add(user)
         db.session.commit()
         flash('Your account has been created! You are now able to log in', 'success')
-        return redirect(url_for('login'))
+        return redirect(url_for('home'))
     
     return render_template('register.html', title='Register', form=form)
 
@@ -63,11 +66,15 @@ def login():
         user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
-            redirect(url_for('home'))
+            return redirect(url_for('home'))
         else:
             flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('login.html', title='Login', form=form)
 
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
 
 #------------------------------------------------
 
@@ -79,11 +86,6 @@ def home():
     events = Event.query.order_by(Event.id.desc()).filter_by(user_id=current_user.id)
     print(current_user.id)
     return render_template("home.html", events=events)
-
-@app.route("/logout")
-def logout():
-    logout_user()
-    return redirect(url_for('index'))
 
 
 
@@ -124,8 +126,16 @@ def create_event():
 @app.route("/event/<string:event_hash>", methods=['GET', 'POST'])
 def event(event_hash):
     event = Event.query.filter_by(hash=event_hash).first_or_404()
-    rsvps = RSVP.query.filter_by(event_id=event.id)
-    return render_template('event/event-page.html', title=event.title, event=event, rsvps=rsvps)
+    rsvps = RSVP.query.filter_by(event_id=event.id).order_by(RSVP.attending.desc())
+    
+    has_event_passed = True if (datetime.now(IST) < (event.datetime.astimezone(IST) + timedelta(hours=1))) else False
+    
+    
+    can_login = True if (datetime.now(IST) > event.datetime.astimezone(IST)) and (datetime.now(IST) < (event.datetime.astimezone(IST) + timedelta(hours=1))) else False
+    if not can_login:
+        flash('Event has passed/has not started yet','info')
+
+    return render_template('event/event-page.html', title=event.title, event=event, rsvps=rsvps, can_login=can_login)
 
 
 
