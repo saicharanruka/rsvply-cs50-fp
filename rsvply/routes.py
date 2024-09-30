@@ -169,7 +169,7 @@ def rsvp(event_hash):
 
     
 
-    return render_template("rsvp.html", form=form, event=event, qr_code_data=qr)
+    return render_template("rsvp.html", form=form, event=event, qr_code_data=qr, author=User.query.filter_by(id=event.user_id).first().username)
 
 
 @app.route('/process_qr', methods=['POST'])

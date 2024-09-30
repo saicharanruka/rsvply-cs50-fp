@@ -7,6 +7,8 @@
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
                 <legend class="border-bottom fw-bold mb-4">RSVP | {{event.title}}</legend>
+                <p>{{event.description}}</p>
+                <p class="fw-bold"> - {{author}}</p>
                 <div class="form-group">
                     {{ form.username.label(class="form-control-label")}}
 

@@ -37,7 +37,7 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Login')
 
 class EventForm(FlaskForm):
-    title = StringField('Title',validators=[DataRequired(), Length(min=10, max=20)])
+    title = StringField('Title',validators=[DataRequired(), Length(min=5, max=30)])
     description = TextAreaField('Description', validators=[DataRequired(), Length(min=20)])
 
     date = DateTimeField('Date',format='%Y-%m-%dT%H:%M', validators=[DataRequired()])
